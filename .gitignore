@@ -4,7 +4,6 @@ Tmp
 *.tlog
 *.opensdf
 *.obj
-*.exe
 *.pdb
 *.user
 *.aps
