@@ -19,6 +19,9 @@
     <Filter Include="SkinInc">
       <UniqueIdentifier>{5bbae9c9-fb68-48be-ba37-4ed7a3ed045c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CommInc">
+      <UniqueIdentifier>{0d3f3bbf-0f6f-4293-8efc-b980951694ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -90,6 +93,21 @@
     <ClInclude Include="..\Inc\SkinInc\UniButton.h">
       <Filter>SkinInc</Filter>
     </ClInclude>
+    <ClInclude Include="RunningDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DefineEnum.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\CommInc\vFunc.h">
+      <Filter>CommInc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\CommInc\BaseIni.h">
+      <Filter>CommInc</Filter>
+    </ClInclude>
+    <ClInclude Include="SysParaIni.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VisionSystem.cpp">
@@ -127,6 +145,15 @@
     </ClCompile>
     <ClCompile Include="..\Inc\SkinInc\UniButton.cpp">
       <Filter>SkinInc</Filter>
+    </ClCompile>
+    <ClCompile Include="RunningDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Inc\CommInc\BaseIni.cpp">
+      <Filter>CommInc</Filter>
+    </ClCompile>
+    <ClCompile Include="SysParaIni.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,14 +3,15 @@
 //
 
 #pragma once
-
+#include "DefineEnum.h"
+#include "RunningDlg.h"
 
 // CVisionSystemDlg 对话框
 class CVisionSystemDlg : public CDialogEx
 {
 public:
-	CMenu m_cSystemMenu ;
-	CControlChange m_ControlChange ;
+	CRunningDlg *m_pRunDlg ;
+
 	CStatic m_CtrlImageView;
 
 	int m_nCtrlWidth ;
@@ -22,12 +23,23 @@ public:
 
 	HTuple  m_hWidth ;
 	HTuple  m_hHeight ;
+
+	CString  m_strExePath ;
 public:
+	void LoadPara() ;
+	void LoadIniFile() ;
+	void DispChildWindow(int nWindowID) ;
+private:
 	void InitSize() ;
 	void InitImageView() ;
+	void InitChildWindow() ;
+	void InitDll() ;
+
 
 protected:
 	CBrush   m_brush; 
+	CControlChange m_ControlChange ;
+	CMenu m_cSystemMenu ;
 // 构造
 public:
 	CVisionSystemDlg(CWnd* pParent = NULL);	// 标准构造函数
@@ -52,4 +64,7 @@ protected:
 public:
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnOtherRunning();
+	afx_msg void OnClose();
 };
+

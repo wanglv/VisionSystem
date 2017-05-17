@@ -41,6 +41,8 @@
 #include "halconcpp.h"
 using namespace HalconCpp;
 
+#include "../Inc/CommInc/vFunc.h"
+
 #include "../Inc/VisionInc/VisionCommModule.h"
 #include "../Inc/VisionInc/VisionCommBase.h"
 
@@ -54,6 +56,7 @@ extern CVisionCommBase* g_pVisionComm ;
 #include "../Inc/SkinInc/ShadeButtonST.h"
 #include "../Inc/SkinInc/Digistring.h"
 
+#include "SysParaIni.h"
 
 
 #ifdef _UNICODE

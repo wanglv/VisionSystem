@@ -14,6 +14,7 @@
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
+
 class CAboutDlg : public CDialogEx
 {
 public:
@@ -67,6 +68,8 @@ BEGIN_MESSAGE_MAP(CVisionSystemDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_WM_CTLCOLOR()
 	ON_WM_SIZE()
+	ON_COMMAND(ID_OTHER_RUNNING, &CVisionSystemDlg::OnOtherRunning)
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 
@@ -102,19 +105,20 @@ BOOL CVisionSystemDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-	g_pVisionComm = CreateInterface() ;
-	if (NULL == g_pVisionComm)
-	{
-		AfxMessageBox(_T("VisionComm Err")) ;
-		EndDialog(IDOK);
-		return FALSE;
-	}
+	InitDll() ;
+
+	InitChildWindow() ;
 
 	InitImageView() ;
 
 	m_cSystemMenu.LoadMenu(IDR_MENU_SYS) ;
 	SetMenu ( &m_cSystemMenu );
 
+	//适应窗口
+	InitSize() ;
+
+	//加载参数
+	LoadPara()  ;
 	//button初始化 m_btnCamMenu---CButtonST
 	/*m_btnCamMenu.SetColor(CButtonST::BTNST_COLOR_BK_OUT, RGB(20,20,22));
 	m_btnCamMenu.SetColor(CButtonST::BTNST_COLOR_BK_IN, RGB(62,62,64));
@@ -126,6 +130,19 @@ BOOL CVisionSystemDlg::OnInitDialog()
 
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
+}
+
+void CVisionSystemDlg::OnClose()
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	if (m_pRunDlg != NULL)
+	{
+		m_pRunDlg->DestroyWindow() ;
+		delete m_pRunDlg ;
+		m_pRunDlg = NULL ;
+	}
+
+	CDialogEx::OnClose();
 }
 
 void CVisionSystemDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -206,17 +223,25 @@ HBRUSH CVisionSystemDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 void CVisionSystemDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CDialogEx::OnSize(nType, cx, cy);
-
+	static bool bFirst = TRUE ;
+	if (bFirst)
+	{
+		bFirst = !bFirst ;
+		return ;
+	}
 	m_ControlChange.OnSize(cx,cy);
 	Invalidate();
+
+	HalconCpp::CloseWindow(m_lWindowID) ;
+	InitImageView() ;
 }
 
 //自动适应窗体变化
 void CVisionSystemDlg::InitSize()
 {
-	/*m_ControlChange.SetOwner(this);
-	m_ControlChange.SetResizeControl(IDC_BTN_CAM_MENU,PK_TOP_LEFT,PK_TOP_RIGHT,PK_BOTTOM_LEFT,PK_BOTTOM_RIGHT);
-	m_ControlChange.SetResizeControl(IDC_BTN_STATION_MENU,PK_TOP_LEFT,PK_TOP_RIGHT,PK_BOTTOM_LEFT,PK_BOTTOM_RIGHT);*/
+	m_ControlChange.SetOwner(this);
+	//m_ControlChange.SetResizeControl(IDR_MENU_SYS,PK_TOP_LEFT,PK_TOP_RIGHT,PK_BOTTOM_LEFT,PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_STATIC_VIEW,PK_TOP_LEFT,PK_TOP_RIGHT,PK_BOTTOM_LEFT,PK_BOTTOM_RIGHT);
 }
 
 void CVisionSystemDlg::InitImageView()
@@ -229,29 +254,151 @@ void CVisionSystemDlg::InitImageView()
 	long lWindowID=0;
 	lWindowID = (long)m_CtrlImageView.GetSafeHwnd();
 
+	
+
+	m_lWindowID = HTuple() ;
+	GenEmptyObj(&m_hImage) ;
 	try
 	{
-		/*TCHAR chPath[MAX_PATH] ;
+		TCHAR chPath[MAX_PATH] ;
 		GetExepath(chPath) ;
 		m_strExePath = chPath ;
 
-		CString strMdlImgPath = m_strExePath + "1.bmp" ;
+		CString strMdlImgPath = m_strExePath + "Model.bmp" ;
 
-
-		Hkey lTmp = m_hImage.Key();
 		ReadImage(&m_hImage,(HTuple)strMdlImgPath) ;
-		GetImageSize(m_hImage,&m_hWidth,&m_hHeight) ;*/
-		m_hWidth = 1600 ;
-		m_hHeight = 1200 ;
+		GetImageSize(m_hImage,&m_hWidth,&m_hHeight) ;
 
+		
+		
+		
+		
+		
 		g_pVisionComm->_V_Comm_InitCtrl(m_nCtrlWidth,m_nCtrlHeight,lWindowID,m_hWidth,m_hHeight,&m_lWindowID) ;
 
+		
 		if (!g_pVisionComm->_V_Comm_HObjectIsEmpty(m_hImage))
 			DispObj(m_hImage,m_lWindowID) ;
-
 	}
 	catch (HException &except)
 	{
 	}
 
 }
+
+void CVisionSystemDlg::InitChildWindow()
+{
+	try
+	{
+		//Init Running Dialog
+		m_pRunDlg = NULL ;
+		m_pRunDlg = new CRunningDlg ;
+		m_pRunDlg->Create(IDD_RUNNING_DIALOG,this) ;
+
+	}
+	catch (...)
+	{
+		
+	}
+}
+
+void CVisionSystemDlg::InitDll()
+{
+	try
+	{
+		g_pVisionComm = CreateInterface() ;
+		if (NULL == g_pVisionComm)
+		{
+			AfxMessageBox(_T("VisionComm Err")) ;
+			EndDialog(IDOK);
+			return ;
+		}
+	}
+	catch (...)
+	{
+		
+	}
+}
+
+void CVisionSystemDlg::DispChildWindow(int nWindowID)
+{
+	try
+	{
+		switch(nWindowID)
+		{
+		case _MAIN_DLG:
+			{
+				this->ShowWindow(SW_SHOW) ;
+				m_pRunDlg->ShowWindow(SW_HIDE) ;
+
+				this->CenterWindow() ;
+
+				break ;
+			}
+		case _RUNNING_DLG:
+			{
+				this->ShowWindow(SW_HIDE) ;
+				m_pRunDlg->ShowWindow(SW_SHOW) ;
+
+				m_pRunDlg->CenterWindow() ;
+
+				break;
+			}
+		default:
+			return ;
+		}
+	}
+	catch (...)
+	{
+		
+	}
+	
+}
+
+void CVisionSystemDlg::OnOtherRunning()
+{
+	try
+	{
+		DispChildWindow(_RUNNING_DLG) ;
+	}
+	catch (...)
+	{
+		
+	}
+}
+
+void CVisionSystemDlg::LoadPara() 
+{
+	try
+	{
+		LoadIniFile()  ;
+	}
+	catch (...)
+	{
+		
+	}
+}
+
+void CVisionSystemDlg::LoadIniFile() 
+{
+	try
+	{
+		
+		CString strSysParaFile("") ;
+
+		//Load SysParaFileIni
+		strSysParaFile = m_strExePath + "Config\\IniFile\\SysPara.ini" ;
+		TCHAR szBuffer[MAX_PATH] ;
+		_tcscpy ( szBuffer, strSysParaFile ) ;
+		g_SysPara.Initialize ( szBuffer ) ;
+
+		g_SysPara.LoadPara() ;
+		this->SetWindowText(g_SysPara.m_strVersion) ;
+	}
+	catch (...)
+	{
+
+	}
+}
+
+
