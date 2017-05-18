@@ -113,6 +113,7 @@
   <ItemGroup>
     <ClInclude Include="..\Inc\CommInc\BaseIni.h" />
     <ClInclude Include="..\Inc\CommInc\vFunc.h" />
+    <ClInclude Include="..\Inc\DataStructInc\CCameraData.h" />
     <ClInclude Include="..\Inc\SkinInc\ANSIAPI.H" />
     <ClInclude Include="..\Inc\SkinInc\BCMenu.h" />
     <ClInclude Include="..\Inc\SkinInc\BtnST.h" />

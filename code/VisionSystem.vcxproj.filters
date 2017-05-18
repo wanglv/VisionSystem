@@ -22,6 +22,9 @@
     <Filter Include="CommInc">
       <UniqueIdentifier>{0d3f3bbf-0f6f-4293-8efc-b980951694ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DataStructInc">
+      <UniqueIdentifier>{fe410b08-2ec4-4600-b19f-99d2b328fae3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -110,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="CommuncationDlg.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\DataStructInc\CCameraData.h">
+      <Filter>DataStructInc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
