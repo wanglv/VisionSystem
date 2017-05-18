@@ -34,7 +34,7 @@ void CSysParaIni::LoadPara()
 		{_T("OptionPara")},//0
 	};
 
-	m_strVersion = ReadString(szSections[0],_T("Soft_Version"),"V1.0.0") ;
+	m_strVersion = ReadString(szSections[0],_T("Soft_Version"),"V1.0.0.1") ;
 	//m_lImageWidth = ReadInt(szSections[0],_T("Cam1_Width"),4608) ;
 }
 
@@ -43,6 +43,6 @@ void CSysParaIni::WritePara()
 	const TCHAR szSections[][64]={
 		{_T("OptionPara")},//0
 	};
-
+	WriteString(szSections[0],_T("Soft_Version"),m_strVersion) ;
 	//WriteInt(szSections[0],_T("Cam1_Width"),m_lImageWidth) ;
 }
