@@ -108,6 +108,9 @@
     <ClInclude Include="SysParaIni.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CommuncationDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VisionSystem.cpp">
@@ -153,6 +156,9 @@
       <Filter>CommInc</Filter>
     </ClCompile>
     <ClCompile Include="SysParaIni.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CommuncationDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

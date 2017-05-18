@@ -70,6 +70,7 @@ BEGIN_MESSAGE_MAP(CVisionSystemDlg, CDialogEx)
 	ON_WM_SIZE()
 	ON_COMMAND(ID_OTHER_RUNNING, &CVisionSystemDlg::OnOtherRunning)
 	ON_WM_CLOSE()
+	ON_COMMAND(ID_COMMUNICATION_COM232, &CVisionSystemDlg::OnCommunicationCom232)
 END_MESSAGE_MAP()
 
 
@@ -142,6 +143,13 @@ void CVisionSystemDlg::OnClose()
 		m_pRunDlg = NULL ;
 	}
 
+	if (m_pCom232 != NULL)
+	{
+		m_pCom232->DestroyWindow() ;
+		delete m_pCom232 ;
+		m_pCom232 = NULL ;
+	}
+
 	CDialogEx::OnClose();
 }
 
@@ -206,12 +214,12 @@ HBRUSH CVisionSystemDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	//其他控件背景、字体颜色设置
 	switch(pWnd->GetDlgCtrlID())
 	{
-		/*case IDC_RADIO1:
+	case IDC_STATIC_CHILD_PAGE:
 		{
-		pDC->SetBkColor(RGB(0,0,0)) ;
-		pDC->SetTextColor(RGB(255,255,255)) ;
-		return   m_brush;
-		}*/
+			pDC->SetBkColor(RGB(0,0,0)) ;
+			pDC->SetTextColor(RGB(255,255,255)) ;
+			return   m_brush;
+		}
 	}
 
 	// TODO:  在此更改 DC 的任何特性
@@ -240,7 +248,7 @@ void CVisionSystemDlg::OnSize(UINT nType, int cx, int cy)
 void CVisionSystemDlg::InitSize()
 {
 	m_ControlChange.SetOwner(this);
-	//m_ControlChange.SetResizeControl(IDR_MENU_SYS,PK_TOP_LEFT,PK_TOP_RIGHT,PK_BOTTOM_LEFT,PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_STATIC_CHILD_PAGE,PK_TOP_LEFT,PK_TOP_RIGHT,PK_BOTTOM_LEFT,PK_BOTTOM_RIGHT);
 	m_ControlChange.SetResizeControl(IDC_STATIC_VIEW,PK_TOP_LEFT,PK_TOP_RIGHT,PK_BOTTOM_LEFT,PK_BOTTOM_RIGHT);
 }
 
@@ -295,6 +303,10 @@ void CVisionSystemDlg::InitChildWindow()
 		m_pRunDlg = new CRunningDlg ;
 		m_pRunDlg->Create(IDD_RUNNING_DIALOG,this) ;
 
+		m_pCom232 = NULL ;
+		m_pCom232 = new CCommuncationDlg ;
+		m_pCom232->Create(IDD_COMMUNICATION_DIALOG,this) ;
+
 	}
 	catch (...)
 	{
@@ -330,6 +342,7 @@ void CVisionSystemDlg::DispChildWindow(int nWindowID)
 			{
 				this->ShowWindow(SW_SHOW) ;
 				m_pRunDlg->ShowWindow(SW_HIDE) ;
+				m_pCom232->ShowWindow(SW_HIDE) ;
 
 				this->CenterWindow() ;
 
@@ -339,9 +352,20 @@ void CVisionSystemDlg::DispChildWindow(int nWindowID)
 			{
 				this->ShowWindow(SW_HIDE) ;
 				m_pRunDlg->ShowWindow(SW_SHOW) ;
+				m_pCom232->ShowWindow(SW_HIDE) ;
 
 				m_pRunDlg->CenterWindow() ;
 
+				break;
+			}
+		case _COM232_DLG:
+			{
+				this->ShowWindow(SW_SHOW) ;
+				m_pRunDlg->ShowWindow(SW_HIDE) ;
+				m_pCom232->ShowWindow(SW_SHOW) ;
+
+				
+				LocateChildDlg(_COM232_DLG) ;
 				break;
 			}
 		default:
@@ -401,4 +425,42 @@ void CVisionSystemDlg::LoadIniFile()
 	}
 }
 
+void CVisionSystemDlg::LocateChildDlg(int nWindowID)
+{
+	try
+	{
+		CRect lpRec ;
+		int nDlgLeft,nDlgTop ;
+		GetDlgItem(IDC_STATIC_CHILD_PAGE)->GetWindowRect(&lpRec) ;
+		nDlgLeft = lpRec.left ;
+		nDlgTop = lpRec.top ;
 
+		switch(nWindowID)
+		{
+		case _COM232_DLG:
+			{
+				m_pCom232->SetWindowPos(NULL,nDlgLeft,nDlgTop,0,0,SWP_NOZORDER | SWP_NOSIZE ) ;
+				break;
+			}
+		default:
+			return ;
+		}
+	}
+	catch (...)
+	{
+		
+	}
+}
+
+
+void CVisionSystemDlg::OnCommunicationCom232()
+{
+	try
+	{
+		DispChildWindow(_COM232_DLG) ;
+	}
+	catch (...)
+	{
+		
+	}
+}

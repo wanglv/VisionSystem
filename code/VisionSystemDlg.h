@@ -5,12 +5,14 @@
 #pragma once
 #include "DefineEnum.h"
 #include "RunningDlg.h"
+#include "CommuncationDlg.h"
 
 // CVisionSystemDlg ¶Ô»°¿ò
 class CVisionSystemDlg : public CDialogEx
 {
 public:
 	CRunningDlg *m_pRunDlg ;
+	CCommuncationDlg *m_pCom232 ;
 
 	CStatic m_CtrlImageView;
 
@@ -34,7 +36,7 @@ private:
 	void InitImageView() ;
 	void InitChildWindow() ;
 	void InitDll() ;
-
+	void LocateChildDlg(int nWindowID) ;
 
 protected:
 	CBrush   m_brush; 
@@ -66,5 +68,6 @@ public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnOtherRunning();
 	afx_msg void OnClose();
+	afx_msg void OnCommunicationCom232();
 };
 

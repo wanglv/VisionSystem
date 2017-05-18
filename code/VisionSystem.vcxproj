@@ -128,6 +128,7 @@
     <ClInclude Include="..\Inc\SkinInc\UniButton.h" />
     <ClInclude Include="..\Inc\VisionInc\VisionCommBase.h" />
     <ClInclude Include="..\Inc\VisionInc\VisionCommModule.h" />
+    <ClInclude Include="CommuncationDlg.h" />
     <ClInclude Include="DefineEnum.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RunningDlg.h" />
@@ -148,6 +149,7 @@
     <ClCompile Include="..\Inc\SkinInc\ShadeButtonST.cpp" />
     <ClCompile Include="..\Inc\SkinInc\ShowPicture.cpp" />
     <ClCompile Include="..\Inc\SkinInc\UniButton.cpp" />
+    <ClCompile Include="CommuncationDlg.cpp" />
     <ClCompile Include="RunningDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
