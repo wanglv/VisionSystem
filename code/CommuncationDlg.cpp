@@ -14,7 +14,7 @@ IMPLEMENT_DYNAMIC(CCommuncationDlg, CDialogEx)
 CCommuncationDlg::CCommuncationDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CCommuncationDlg::IDD, pParent)
 {
-	m_brush.CreateSolidBrush(RGB(20,20,22));   //   生成刷子
+	m_brush.CreateSolidBrush(_COLOR_BK);   //   生成刷子
 }
 
 CCommuncationDlg::~CCommuncationDlg()
@@ -43,6 +43,8 @@ BOOL CCommuncationDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	CMenu* pMenu = this->GetSystemMenu(FALSE);//系统菜单
+	pMenu->ModifyMenu(SC_CLOSE,MF_BYCOMMAND | MF_GRAYED );//禁用关闭按钮
 	// TODO:  在此添加额外的初始化
 	InitStBtn() ;
 
@@ -90,12 +92,12 @@ void CCommuncationDlg::InitStBtn()
 		m_stBtnFont.CreatePointFont(160,"arial") ;
 
 		m_stBtnExit.SetFont(&m_stBtnFont) ;
-		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_BK_OUT, RGB(20,20,22));
-		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_BK_IN, RGB(62,62,64));
-		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_BK_FOCUS, RGB(0,0,0));
-		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_FG_OUT, RGB(255, 0, 0));
-		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_FG_IN, RGB(255, 0, 0));
-		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, RGB(255, 0, 0));
+		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_BK_OUT, _COLOR_BK);
+		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_BK_IN, _COLOR_BK_IN);
+		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_BK_FOCUS, _COLOR_BLACK);
+		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_FG_OUT, _COLOR_RED);
+		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_FG_IN, _COLOR_RED);
+		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, _COLOR_RED);
 	}
 	catch (...)
 	{

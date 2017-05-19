@@ -53,7 +53,7 @@ CVisionSystemDlg::CVisionSystemDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CVisionSystemDlg::IDD, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-	m_brush.CreateSolidBrush(RGB(20,20,22));   //   生成刷子 
+	m_brush.CreateSolidBrush(_COLOR_BK);   //   生成刷子 
 }
 
 void CVisionSystemDlg::DoDataExchange(CDataExchange* pDX)
@@ -216,8 +216,8 @@ HBRUSH CVisionSystemDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	{
 	case IDC_STATIC_CHILD_PAGE:
 		{
-			pDC->SetBkColor(RGB(0,0,0)) ;
-			pDC->SetTextColor(RGB(255,255,255)) ;
+			pDC->SetBkColor(_COLOR_BLACK) ;
+			pDC->SetTextColor(_COLOR_WHITE) ;
 			return   m_brush;
 		}
 	}
