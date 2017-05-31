@@ -17,6 +17,8 @@
 
 class CVisionSystemApp : public CWinApp
 {
+private:
+	HANDLE m_myMutex;
 public:
 	CVisionSystemApp();
 
@@ -27,6 +29,7 @@ public:
 // й╣ож
 
 	DECLARE_MESSAGE_MAP()
+	virtual int ExitInstance();
 };
 
 extern CVisionSystemApp theApp;

@@ -117,6 +117,15 @@
     <ClInclude Include="..\Inc\DataStructInc\CCameraData.h">
       <Filter>DataStructInc</Filter>
     </ClInclude>
+    <ClInclude Include="..\Inc\CommInc\BackCode.h">
+      <Filter>CommInc</Filter>
+    </ClInclude>
+    <ClInclude Include="ExitSystemDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Inc\CommInc\MyStatic.h">
+      <Filter>CommInc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VisionSystem.cpp">
@@ -166,6 +175,12 @@
     </ClCompile>
     <ClCompile Include="CommuncationDlg.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ExitSystemDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Inc\CommInc\MyStatic.cpp">
+      <Filter>CommInc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

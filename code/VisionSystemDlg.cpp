@@ -6,6 +6,7 @@
 #include "VisionSystem.h"
 #include "VisionSystemDlg.h"
 #include "afxdialogex.h"
+#include "ExitSystemDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -60,6 +61,7 @@ void CVisionSystemDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_STATIC_VIEW, m_CtrlImageView);
+	DDX_Control(pDX, IDC_RICHEDIT_SYSTIPS, m_ctlSysTipsDisplay);
 }
 
 BEGIN_MESSAGE_MAP(CVisionSystemDlg, CDialogEx)
@@ -71,6 +73,7 @@ BEGIN_MESSAGE_MAP(CVisionSystemDlg, CDialogEx)
 	ON_COMMAND(ID_OTHER_RUNNING, &CVisionSystemDlg::OnOtherRunning)
 	ON_WM_CLOSE()
 	ON_COMMAND(ID_COMMUNICATION_COM232, &CVisionSystemDlg::OnCommunicationCom232)
+	ON_MESSAGE(WM_STATICMOUSE, OnStaticMouseMove)
 END_MESSAGE_MAP()
 
 
@@ -128,7 +131,10 @@ BOOL CVisionSystemDlg::OnInitDialog()
 	m_btnCamMenu.SetColor(CButtonST::BTNST_COLOR_FG_IN, RGB(255, 255, 255));
 	m_btnCamMenu.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, RGB(255, 255, 255));
 	*/
+	m_ctlSysTipsDisplay.SetBackgroundColor(FALSE, _COLOR_BK);
+	SetSysTipsInfo(LoadStringTable(IDS_INIT_OK), _COLOR_GREEN);
 
+	//return FALSE;
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -136,6 +142,10 @@ BOOL CVisionSystemDlg::OnInitDialog()
 void CVisionSystemDlg::OnClose()
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	CExitSystemDlg exitDlg;
+	if (exitDlg.DoModal() != IDOK)
+		return;
+
 	if (m_pRunDlg != NULL)
 	{
 		m_pRunDlg->DestroyWindow() ;
@@ -212,7 +222,7 @@ HBRUSH CVisionSystemDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		return   m_brush;
 
 	//其他控件背景、字体颜色设置
-	switch(pWnd->GetDlgCtrlID())
+	switch (pWnd->GetDlgCtrlID())
 	{
 	case IDC_STATIC_CHILD_PAGE:
 		{
@@ -220,6 +230,32 @@ HBRUSH CVisionSystemDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 			pDC->SetTextColor(_COLOR_WHITE) ;
 			return   m_brush;
 		}
+	case IDC_STATIC_ROW:
+		{
+			pDC->SetBkColor(_COLOR_BLACK);
+			pDC->SetTextColor(_COLOR_WHITE);
+			return   m_brush;
+		}
+	case IDC_STATIC_COL:
+		{
+			pDC->SetBkColor(_COLOR_BLACK);
+			pDC->SetTextColor(_COLOR_WHITE);
+			return   m_brush;
+		}
+	case IDC_STATIC_GRAY:
+		{
+			pDC->SetBkColor(_COLOR_BLACK);
+			pDC->SetTextColor(_COLOR_WHITE);
+			return   m_brush;
+		}
+	case IDC_STATIC_CAM_RATE:
+		{
+			pDC->SetBkColor(_COLOR_BLACK);
+			pDC->SetTextColor(_COLOR_WHITE);
+			return   m_brush;
+		}
+	default:
+		break;
 	}
 
 	// TODO:  在此更改 DC 的任何特性
@@ -248,8 +284,13 @@ void CVisionSystemDlg::OnSize(UINT nType, int cx, int cy)
 void CVisionSystemDlg::InitSize()
 {
 	m_ControlChange.SetOwner(this);
+	m_ControlChange.SetResizeControl(IDC_RICHEDIT_SYSTIPS, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
 	m_ControlChange.SetResizeControl(IDC_STATIC_CHILD_PAGE,PK_TOP_LEFT,PK_TOP_RIGHT,PK_BOTTOM_LEFT,PK_BOTTOM_RIGHT);
 	m_ControlChange.SetResizeControl(IDC_STATIC_VIEW,PK_TOP_LEFT,PK_TOP_RIGHT,PK_BOTTOM_LEFT,PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_STATIC_ROW, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_STATIC_COL, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_STATIC_GRAY, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_STATIC_CAM_RATE, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
 }
 
 void CVisionSystemDlg::InitImageView()
@@ -287,9 +328,11 @@ void CVisionSystemDlg::InitImageView()
 		
 		if (!g_pVisionComm->_V_Comm_HObjectIsEmpty(m_hImage))
 			DispObj(m_hImage,m_lWindowID) ;
+
 	}
 	catch (HException &except)
 	{
+		SetSysTipsInfo(LoadStringTable(IDS_INIT_VIEW_ERR), _COLOR_RED);
 	}
 
 }
@@ -302,15 +345,17 @@ void CVisionSystemDlg::InitChildWindow()
 		m_pRunDlg = NULL ;
 		m_pRunDlg = new CRunningDlg ;
 		m_pRunDlg->Create(IDD_RUNNING_DIALOG,this) ;
+		SetSysTipsInfo(LoadStringTable(IDS_INIT_RUNNING_DLG_OK), _COLOR_GREEN);
 
 		m_pCom232 = NULL ;
 		m_pCom232 = new CCommuncationDlg ;
 		m_pCom232->Create(IDD_COMMUNICATION_DIALOG,this) ;
+		SetSysTipsInfo(LoadStringTable(IDS_INIT_232DLG_SUCCESS), _COLOR_GREEN);
 
 	}
 	catch (...)
 	{
-		
+		SetSysTipsInfo(LoadStringTable(IDS_INIT_CHILD_DLG_ERR), _COLOR_RED);
 	}
 }
 
@@ -321,10 +366,12 @@ void CVisionSystemDlg::InitDll()
 		g_pVisionComm = CreateInterface() ;
 		if (NULL == g_pVisionComm)
 		{
-			AfxMessageBox(_T("VisionComm Err")) ;
+			AfxMessageBox(_T("VisionComm Err"));
 			EndDialog(IDOK);
-			return ;
+			return;
 		}
+		else
+			SetSysTipsInfo(LoadStringTable(IDS_LOAD_DLL_OK),_COLOR_GREEN);
 	}
 	catch (...)
 	{
@@ -395,7 +442,11 @@ void CVisionSystemDlg::LoadPara()
 {
 	try
 	{
+		//Load system Ini file
+		SetSysTipsInfo(LoadStringTable(IDS_LOAD_SYS_INI), _COLOR_YELLOW);
 		LoadIniFile()  ;
+
+
 	}
 	catch (...)
 	{
@@ -463,4 +514,83 @@ void CVisionSystemDlg::OnCommunicationCom232()
 	{
 		
 	}
+}
+
+void CVisionSystemDlg::SetSysTipsInfo(CString strInfo, COLORREF crColor)
+{
+	try
+	{
+		CHARFORMAT cf;
+		memset(&cf, 0, sizeof(CHARFORMAT));
+
+		m_ctlSysTipsDisplay.GetSelectionCharFormat(cf);
+		cf.dwMask = CFM_COLOR | CFM_SIZE;
+		cf.yHeight = 218;
+		cf.cbSize = 1000;
+		cf.crTextColor = crColor;
+		cf.dwEffects = 0;
+		m_ctlSysTipsDisplay.SetSelectionCharFormat(cf);
+
+		CString strLine = _T(""), strEdit = _T("");
+
+		m_ctlSysTipsDisplay.GetWindowText(strEdit);
+		m_ctlSysTipsDisplay.SetSel(-1, -1);
+		strLine.Format("%s\r\n", strInfo);
+		m_ctlSysTipsDisplay.ReplaceSel(strLine);
+		
+
+		HWND  hWnd = (HWND)m_ctlSysTipsDisplay;
+		int line = ::SendMessage(hWnd, EM_GETFIRSTVISIBLELINE, 0, 0);
+		int linecount = ::SendMessage(hWnd, EM_GETLINECOUNT, 0, 0);
+
+		::SendMessage(hWnd, EM_LINESCROLL, 0, (linecount - line - 2));
+
+		//Cancel select all text in richedit control
+		m_ctlSysTipsDisplay.SetOptions(ECOOP_OR, ECO_SAVESEL);
+	}
+	catch (...)
+	{
+
+	}
+	
+}
+
+CString CVisionSystemDlg::LoadStringTable(int nID)
+{
+	
+	CString strTable("");
+	strTable.LoadString(nID);
+
+	return strTable;
+	
+}
+
+LRESULT  CVisionSystemDlg::OnStaticMouseMove(WPARAM wParam, LPARAM lParam)
+{
+	try
+	{
+		HTuple hRow, hCol,hGray;
+		CString strRow(""), strCol(""), strGray("");
+		hRow = hCol = hGray = HTuple();
+
+		SetCheck("~give_error");
+		GetMposition(m_lWindowID, &hRow, &hCol, NULL);
+		if (hRow.TupleNumber() < 1)
+			return 0L;
+		GetGrayval(m_hImage, hRow, hCol, &hGray);
+
+		strRow.Format("Row:%.0f", hRow[0].D());
+		strCol.Format("Col:%.0f", hCol[0].D());
+		strGray.Format("Gray:%.0f", hGray[0].D());
+
+		GetDlgItem(IDC_STATIC_ROW)->SetWindowText(strRow);
+		GetDlgItem(IDC_STATIC_COL)->SetWindowText(strCol);
+		GetDlgItem(IDC_STATIC_GRAY)->SetWindowText(strGray);
+	}
+	catch (HException& except)
+	{
+		
+	}
+
+	return 1L;
 }

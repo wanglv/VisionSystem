@@ -56,6 +56,9 @@ extern CVisionCommBase* g_pVisionComm ;
 #include "../Inc/SkinInc/ShadeButtonST.h"
 #include "../Inc/SkinInc/Digistring.h"
 
+#include "../Inc/CommInc/BackCode.h"
+#include "../Inc/CommInc/MyStatic.h"
+
 #include "SysParaIni.h"
 
 

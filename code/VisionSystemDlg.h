@@ -6,6 +6,7 @@
 #include "DefineEnum.h"
 #include "RunningDlg.h"
 #include "CommuncationDlg.h"
+#include "afxcmn.h"
 
 // CVisionSystemDlg ¶Ô»°¿ò
 class CVisionSystemDlg : public CDialogEx
@@ -14,7 +15,8 @@ public:
 	CRunningDlg *m_pRunDlg ;
 	CCommuncationDlg *m_pCom232 ;
 
-	CStatic m_CtrlImageView;
+	CMyStatic m_CtrlImageView;
+	CRichEditCtrl m_ctlSysTipsDisplay;
 
 	int m_nCtrlWidth ;
 	int m_nCtrlHeight ;
@@ -31,6 +33,8 @@ public:
 	void LoadPara() ;
 	void LoadIniFile() ;
 	void DispChildWindow(int nWindowID) ;
+	CString LoadStringTable(int nID);
+	void SetSysTipsInfo(CString strInfo, COLORREF crColor);
 private:
 	void InitSize() ;
 	void InitImageView() ;
@@ -62,6 +66,7 @@ protected:
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
+	LRESULT OnStaticMouseMove(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);

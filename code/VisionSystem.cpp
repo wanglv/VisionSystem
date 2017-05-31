@@ -67,6 +67,29 @@ BOOL CVisionSystemApp::InitInstance()
 	// 例如修改为公司或组织名
 	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
 
+	m_myMutex = OpenMutex(MUTEX_ALL_ACCESS, FALSE, "VisionSystem Mutex");
+
+	if (m_myMutex == NULL)
+	{   //表示没有其他实例运行
+		m_myMutex = ::CreateMutexA(NULL, TRUE, "VisionSystem Mutex");
+	}
+	else
+	{   //表示当前有其他实例运行
+		AfxMessageBox("Software running, please don't repeat to open!");
+
+		if (m_myMutex != NULL)
+		{
+			ReleaseMutex(m_myMutex);
+
+			m_myMutex = NULL;
+		}
+
+		return FALSE;
+	}
+
+	//AfxInitRichEdit();
+	AfxInitRichEdit2();
+
 	CVisionSystemDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
@@ -92,3 +115,16 @@ BOOL CVisionSystemApp::InitInstance()
 	return FALSE;
 }
 
+
+
+int CVisionSystemApp::ExitInstance()
+{
+	if (m_myMutex != NULL)
+	{
+		ReleaseMutex(m_myMutex);
+
+		m_myMutex = NULL;
+	}
+
+	return CWinApp::ExitInstance();
+}
