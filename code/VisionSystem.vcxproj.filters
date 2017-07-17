@@ -126,6 +126,9 @@
     <ClInclude Include="..\Inc\CommInc\MyStatic.h">
       <Filter>CommInc</Filter>
     </ClInclude>
+    <ClInclude Include="CommunicationIni.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VisionSystem.cpp">
@@ -181,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="..\Inc\CommInc\MyStatic.cpp">
       <Filter>CommInc</Filter>
+    </ClCompile>
+    <ClCompile Include="CommunicationIni.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

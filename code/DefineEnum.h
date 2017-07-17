@@ -9,6 +9,12 @@
 #define _COLOR_BLUE		    RGB(0,0,255)
 #define _COLOR_YELLOW       RGB(255,255,0)
 
+enum _COMMUNICATION
+{
+	_232_COMM = 0,
+	_TCP_IP,
+};
+
 enum _CHILD_WINDOW
 {
 	_MAIN_DLG = 0,

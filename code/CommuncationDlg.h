@@ -8,9 +8,14 @@ class CCommuncationDlg : public CDialogEx
 	DECLARE_DYNAMIC(CCommuncationDlg)
 public:
 	CButtonST m_stBtnExit ;
+
+	CButtonST m_stBtnUpdatePara;
+	CButtonST m_stBtnSend;
+	CButtonST m_stBtnClearAll;
 protected:
 	CBrush   m_brush; 
 	CFont     m_stBtnFont ;
+	CFont     m_stBtnFont2;
 	CControlChange m_ControlChange ;
 private:
 	void InitStBtn() ;

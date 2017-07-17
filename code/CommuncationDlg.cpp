@@ -25,6 +25,9 @@ void CCommuncationDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_BTN_EXIT, m_stBtnExit);
+	DDX_Control(pDX, IDC_BTN_UPDATE_232, m_stBtnUpdatePara);
+	DDX_Control(pDX, IDC_BTN_SEND, m_stBtnSend);
+	DDX_Control(pDX, IDC_BTN_CLEAR_ALL, m_stBtnClearAll);
 }
 
 
@@ -72,6 +75,71 @@ HBRUSH CCommuncationDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	if(nCtlColor   ==CTLCOLOR_DLG)    
 		return   m_brush;
 
+	switch (pWnd->GetDlgCtrlID())
+	{
+	case IDC_STATIC_1:
+	{
+		pDC->SetBkColor(_COLOR_BLACK);
+		pDC->SetTextColor(_COLOR_WHITE);
+		return   m_brush;
+	}
+	case IDC_STATIC_2:
+	{
+		pDC->SetBkColor(_COLOR_BLACK);
+		pDC->SetTextColor(_COLOR_WHITE);
+		return   m_brush;
+	}
+	case IDC_STATIC_3:
+	{
+		pDC->SetBkColor(_COLOR_BLACK);
+		pDC->SetTextColor(_COLOR_WHITE);
+		return   m_brush;
+	}
+	case IDC_STATIC_4:
+	{
+		pDC->SetBkColor(_COLOR_BLACK);
+		pDC->SetTextColor(_COLOR_WHITE);
+		return   m_brush;
+	}
+	case IDC_STATIC_5:
+	{
+		pDC->SetBkColor(_COLOR_BLACK);
+		pDC->SetTextColor(_COLOR_WHITE);
+		return   m_brush;
+	}
+	case IDC_STATIC_232PARA:
+	{
+		pDC->SetBkColor(_COLOR_BLACK);
+		pDC->SetTextColor(_COLOR_WHITE);
+		return   m_brush;
+	}
+	case IDC_STATIC_SEND:
+	{
+		pDC->SetBkColor(_COLOR_BLACK);
+		pDC->SetTextColor(_COLOR_WHITE);
+		return   m_brush;
+	}
+	case IDC_STATIC_RECIEVE:
+	{
+		pDC->SetBkColor(_COLOR_BLACK);
+		pDC->SetTextColor(_COLOR_WHITE);
+		return   m_brush;
+	}
+	case IDC_EDIT_SEND_DATA:
+	{
+		pDC->SetBkColor(_COLOR_BLACK);
+		pDC->SetTextColor(_COLOR_BLUE);
+		return   m_brush;
+	}
+	case IDC_EDIT_RECIEVE_DATA:
+	{
+		pDC->SetBkColor(_COLOR_BLACK);
+		pDC->SetTextColor(_COLOR_RED);
+		return   m_brush;
+	}
+	default:
+		break;
+	}
 
 	return hbr;
 }
@@ -89,15 +157,40 @@ void CCommuncationDlg::InitStBtn()
 {
 	try
 	{
-		m_stBtnFont.CreatePointFont(160,"arial") ;
-
-		m_stBtnExit.SetFont(&m_stBtnFont) ;
+		m_stBtnFont.CreatePointFont(160, "arial");
+		m_stBtnExit.SetFont(&m_stBtnFont);
 		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_BK_OUT, _COLOR_BK);
 		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_BK_IN, _COLOR_BK_IN);
 		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_BK_FOCUS, _COLOR_BK);
 		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_FG_OUT, _COLOR_RED);
 		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_FG_IN, _COLOR_RED);
 		m_stBtnExit.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, _COLOR_RED);
+
+		m_stBtnFont2.CreatePointFont(100, "arial");
+
+		m_stBtnUpdatePara.SetFont(&m_stBtnFont2);
+		m_stBtnUpdatePara.SetColor(CButtonST::BTNST_COLOR_BK_OUT, _COLOR_BK);
+		m_stBtnUpdatePara.SetColor(CButtonST::BTNST_COLOR_BK_IN, _COLOR_BK_IN);
+		m_stBtnUpdatePara.SetColor(CButtonST::BTNST_COLOR_BK_FOCUS, _COLOR_BK);
+		m_stBtnUpdatePara.SetColor(CButtonST::BTNST_COLOR_FG_OUT, _COLOR_BLUE);
+		m_stBtnUpdatePara.SetColor(CButtonST::BTNST_COLOR_FG_IN, _COLOR_BLUE);
+		m_stBtnUpdatePara.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, _COLOR_BLUE);
+
+		m_stBtnSend.SetFont(&m_stBtnFont2);
+		m_stBtnSend.SetColor(CButtonST::BTNST_COLOR_BK_OUT, _COLOR_BK);
+		m_stBtnSend.SetColor(CButtonST::BTNST_COLOR_BK_IN, _COLOR_BK_IN);
+		m_stBtnSend.SetColor(CButtonST::BTNST_COLOR_BK_FOCUS, _COLOR_BK);
+		m_stBtnSend.SetColor(CButtonST::BTNST_COLOR_FG_OUT, _COLOR_BLUE);
+		m_stBtnSend.SetColor(CButtonST::BTNST_COLOR_FG_IN, _COLOR_BLUE);
+		m_stBtnSend.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, _COLOR_BLUE);
+
+		m_stBtnClearAll.SetFont(&m_stBtnFont2);
+		m_stBtnClearAll.SetColor(CButtonST::BTNST_COLOR_BK_OUT, _COLOR_BK);
+		m_stBtnClearAll.SetColor(CButtonST::BTNST_COLOR_BK_IN, _COLOR_BK_IN);
+		m_stBtnClearAll.SetColor(CButtonST::BTNST_COLOR_BK_FOCUS, _COLOR_BK);
+		m_stBtnClearAll.SetColor(CButtonST::BTNST_COLOR_FG_OUT, _COLOR_BLUE);
+		m_stBtnClearAll.SetColor(CButtonST::BTNST_COLOR_FG_IN, _COLOR_BLUE);
+		m_stBtnClearAll.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, _COLOR_BLUE);
 	}
 	catch (...)
 	{
@@ -108,7 +201,29 @@ void CCommuncationDlg::InitStBtn()
 void CCommuncationDlg::InitSize()
 {
 	m_ControlChange.SetOwner(this);
-	m_ControlChange.SetResizeControl(IDC_BTN_EXIT,PK_TOP_LEFT,PK_TOP_RIGHT,PK_BOTTOM_LEFT,PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_BTN_EXIT, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_BTN_UPDATE_232, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_BTN_SEND, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_BTN_CLEAR_ALL, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+
+	m_ControlChange.SetResizeControl(IDC_STATIC_232PARA, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_STATIC_SEND, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_STATIC_RECIEVE, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+
+	m_ControlChange.SetResizeControl(IDC_STATIC_1, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_STATIC_2, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_STATIC_3, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_STATIC_4, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_STATIC_5, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+
+	m_ControlChange.SetResizeControl(IDC_COMBO_PORT, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_COMBO_PAUD, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_COMBO_PARITY, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_COMBO_BITSIZE, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_COMBO_STOPBIT, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+
+	m_ControlChange.SetResizeControl(IDC_EDIT_SEND_DATA, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
+	m_ControlChange.SetResizeControl(IDC_EDIT_RECIEVE_DATA, PK_TOP_LEFT, PK_TOP_RIGHT, PK_BOTTOM_LEFT, PK_BOTTOM_RIGHT);
 }
 
 void CCommuncationDlg::OnBnClickedBtnExit()
