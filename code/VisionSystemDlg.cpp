@@ -321,8 +321,6 @@ void CVisionSystemDlg::InitImageView()
 		
 		
 		
-		
-		
 		g_pVisionComm->_V_Comm_InitCtrl(m_nCtrlWidth,m_nCtrlHeight,lWindowID,m_hWidth,m_hHeight,&m_lWindowID) ;
 
 		
@@ -446,7 +444,6 @@ void CVisionSystemDlg::LoadPara()
 		SetSysTipsInfo(LoadStringTable(IDS_LOAD_SYS_INI), _COLOR_YELLOW);
 		LoadIniFile()  ;
 
-
 	}
 	catch (...)
 	{
@@ -469,6 +466,13 @@ void CVisionSystemDlg::LoadIniFile()
 
 		g_SysPara.LoadPara() ;
 		this->SetWindowText(g_SysPara.m_strVersion) ;
+
+		//Load Comm232ParaFileIni
+		strSysParaFile = m_strExePath + "Config\\IniFile\\Comm232.ini";
+		_tcscpy(szBuffer, strSysParaFile);
+		g_CommuncationIni.Initialize(szBuffer);
+
+		m_pCom232->LoadCom232Para();
 	}
 	catch (...)
 	{

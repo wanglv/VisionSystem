@@ -137,6 +137,7 @@
     <ClInclude Include="CommunicationIni.h" />
     <ClInclude Include="DefineEnum.h" />
     <ClInclude Include="ExitSystemDlg.h" />
+    <ClInclude Include="mscomm1.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RunningDlg.h" />
     <ClInclude Include="stdafx.h" />
@@ -160,6 +161,7 @@
     <ClCompile Include="CommuncationDlg.cpp" />
     <ClCompile Include="CommunicationIni.cpp" />
     <ClCompile Include="ExitSystemDlg.cpp" />
+    <ClCompile Include="mscomm1.cpp" />
     <ClCompile Include="RunningDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -177,7 +179,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties RESOURCE_FILE="VisionSystem.rc" />
+      <UserProperties _x007B_648A5600-2C6E-101B-82B6-000000000014_x007D_="CMscomm1" RESOURCE_FILE="VisionSystem.rc" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

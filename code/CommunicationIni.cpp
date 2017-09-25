@@ -31,15 +31,15 @@ BOOL CCommunicationIni::Initialize(void *pvoid)
 void CCommunicationIni::LoadPara()
 {
 	const TCHAR szSections[][64] = {
-		{ _T("OptionPara") },//0
+		{ _T("Comm232Para") },//0
 	};
 
 	m_nConnectType = ReadInt(szSections[0], "Connect_Type", _232_COMM);
 	m_nBitSize = ReadInt(szSections[0], "Bits_Size", 4);
-	m_nPort = ReadInt(szSections[0], _T("Port"), 3);
+	m_nPort = ReadInt(szSections[0], _T("Port"), 2);
 	m_nParity = ReadInt(szSections[0], _T("Parity"), 0);
 	m_nStopBit = ReadInt(szSections[0], _T("Stop_Bits"), 0);
-	m_nBaudRate = ReadInt(szSections[0], _T("Baud_Rate"), 0);
+	m_nBaudRate = ReadInt(szSections[0], _T("Baud_Rate"), 3);
 
 }
 
@@ -56,3 +56,4 @@ void CCommunicationIni::WritePara()
 	WriteInt(szSections[0], "Stop_Bits", m_nStopBit);
 	WriteInt(szSections[0], "Baud_Rate", m_nBaudRate);
 }
+

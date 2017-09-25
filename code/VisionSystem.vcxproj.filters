@@ -129,6 +129,9 @@
     <ClInclude Include="CommunicationIni.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="mscomm1.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VisionSystem.cpp">
@@ -186,6 +189,9 @@
       <Filter>CommInc</Filter>
     </ClCompile>
     <ClCompile Include="CommunicationIni.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mscomm1.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

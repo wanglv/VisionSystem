@@ -60,6 +60,7 @@ extern CVisionCommBase* g_pVisionComm ;
 #include "../Inc/CommInc/MyStatic.h"
 
 #include "SysParaIni.h"
+#include "CommunicationIni.h"
 
 
 #ifdef _UNICODE
